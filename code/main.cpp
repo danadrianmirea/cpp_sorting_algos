@@ -4,9 +4,10 @@
 void bubble_sort(std::vector<int>& v)
 {
     int n = v.size();
-    for (int i = 0; i < n - 1;i++)
+    
+    for( int end = n-1; end>0; end--)
     {
-        for (int j = 0; j < n - i - 1; j++)
+        for (int j = 0; j < end; j++)
         {
             if (v[j] > v[j + 1])
             {
@@ -18,7 +19,7 @@ void bubble_sort(std::vector<int>& v)
 
 int main()
 {
-    std::vector<int> v = { 5, 2, 1, 9, -2 };
+    std::vector<int> v = { 55, -43, 1, 9, -2 };
     bubble_sort(v);
 
     for (auto& e : v)
