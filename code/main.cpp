@@ -16,21 +16,6 @@ void bubble_sort(std::vector<int> &v)
   }
 }
 
-void stalin_sort(std::vector<int> &vec)
-{
-  for (int i = 0; i < vec.size() - 1;)
-  {
-    if (vec[i + 1] < vec[i])
-    {
-      vec.erase(vec.begin() + i + 1);
-    }
-    else
-    {
-      ++i;
-    }
-  }
-}
-
 int main()
 {
   std::vector<int> v = {2, 5, -2, 55, -7};
