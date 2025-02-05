@@ -1,7 +1,7 @@
 add_executable(${PROJECT_NAME})
 
 add_custom_target(run 
-    COMMAND ${PROJECT_NAME}
+    COMMAND ${main.exe}
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build"
 )
 
