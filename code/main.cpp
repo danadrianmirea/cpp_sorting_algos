@@ -1,8 +1,10 @@
 #include <sys/time.h>
 
+#include <algorithm>
 #include <climits>
 #include <cstdlib>
 #include <iostream>
+#include <random>
 #include <vector>
 
 void bubble_sort(std::vector<int>& v)
@@ -136,16 +138,29 @@ void random_swap_sort(std::vector<int>& v)
   }
 }
 
+// monkey sort, also known as bogosort
+void monkey_sort(std::vector<int>& v)
+{
+  std::random_device rd;
+  std::mt19937 rng(rd());
+
+  while (is_sorted(v) == false)
+  {
+    std::shuffle(v.begin(), v.end(), rng);
+  }
+}
+
 int main()
 {
   std::vector<int> v = {26, 53, 61, 5, 67, 90, 23, -24, 35, -71};
 
   // bubble_sort(v);
-  //  selection_sort(v);
-  //  stalin_sort(v);
-  //  optimized_stalin_sort(v);
-  //  insertion_sort(v);
-  random_swap_sort(v);
+  // selection_sort(v);
+  // stalin_sort(v);
+  // optimized_stalin_sort(v);
+  // insertion_sort(v);
+  // random_swap_sort(v);
+  monkey_sort(v);
 
   for (auto& e : v)
   {
