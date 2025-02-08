@@ -93,6 +93,19 @@ void insertion_sort(std::vector<int>& v)
   }
 }
 
+bool is_sorted(std::vector<int>& v)
+{
+  int n = v.size();
+  for (int i = 1; i < n; i++)
+  {
+    if (v[i] < v[i - 1])
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
 int main()
 {
   std::vector<int> v = {-8, 1, 2, -5, 13, -9};
