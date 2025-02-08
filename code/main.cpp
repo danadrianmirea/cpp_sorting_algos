@@ -61,12 +61,29 @@ void stalin_sort(std::vector<int>& v)
   }
 }
 
+void optimized_stalin_sort(std::vector<int>& v)
+{
+  // to avoid the complexity of std::erase we can directly construct the final vector
+  int n = v.size();
+  std::vector<int> sorted;
+  sorted.push_back(v[0]);
+  for (auto& e : v)
+  {
+    if (e > sorted.back())
+    {
+      sorted.push_back(e);
+    }
+  }
+  v = sorted;
+}
+
 int main()
 {
   std::vector<int> v = {-8, 1, 2, -5, 13, -9};
   // bubble_sort(v);
-  // selection_sort(v);
-  stalin_sort(v);
+  //  selection_sort(v);
+  //  stalin_sort(v);
+  optimized_stalin_sort(v);
 
   for (auto& e : v)
   {
