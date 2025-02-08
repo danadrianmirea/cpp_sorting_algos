@@ -77,13 +77,30 @@ void optimized_stalin_sort(std::vector<int>& v)
   v = sorted;
 }
 
+void insertion_sort(std::vector<int>& v)
+{
+  int n = v.size();
+  for (int i = 1; i < n; ++i)
+  {
+    int tmp = v[i];
+    int cInd = i;
+    while (cInd > 0 && tmp < v[cInd - 1])
+    {
+      v[cInd] = v[cInd - 1];
+      cInd--;
+    }
+    v[cInd] = tmp;
+  }
+}
+
 int main()
 {
   std::vector<int> v = {-8, 1, 2, -5, 13, -9};
   // bubble_sort(v);
-  // selection_sort(v);
-  // stalin_sort(v);
-  optimized_stalin_sort(v);
+  //  selection_sort(v);
+  //  stalin_sort(v);
+  //  optimized_stalin_sort(v);
+  insertion_sort(v);
 
   for (auto& e : v)
   {
