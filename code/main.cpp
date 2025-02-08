@@ -1,6 +1,7 @@
 #include <sys/time.h>
 
 #include <algorithm>
+#include <chrono>
 #include <climits>
 #include <cstdlib>
 #include <iostream>
@@ -150,17 +151,29 @@ void monkey_sort(std::vector<int>& v)
   }
 }
 
+void measure_sort_time(std::vector<int>& v, void (*sorting_function)(std::vector<int>&), std::string name = "Unknown name")
+{
+  auto start = std::chrono::high_resolution_clock::now();
+  sorting_function(v);
+  auto end = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double, std::milli> duration = end - start;
+  std::cout << "Sorting with " << name << " took " << duration.count() << " milliseconds." << std::endl;
+}
+
 int main()
 {
   std::vector<int> v = {26, 53, 61, 5, 67, 90, 23, -24, 35, -71};
-
+  std::vector<int> testVector = v;
   // bubble_sort(v);
   // selection_sort(v);
   // stalin_sort(v);
   // optimized_stalin_sort(v);
   // insertion_sort(v);
   // random_swap_sort(v);
-  monkey_sort(v);
+
+  measure_sort_time(testVector, monkey_sort, "Monkey Sort");
+  testVector = v;
+  measure_sort_time(testVector, bubble_sort, "Bubble Sort");
 
   for (auto& e : v)
   {
