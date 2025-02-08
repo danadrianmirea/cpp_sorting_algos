@@ -81,8 +81,8 @@ int main()
 {
   std::vector<int> v = {-8, 1, 2, -5, 13, -9};
   // bubble_sort(v);
-  //  selection_sort(v);
-  //  stalin_sort(v);
+  // selection_sort(v);
+  // stalin_sort(v);
   optimized_stalin_sort(v);
 
   for (auto& e : v)
