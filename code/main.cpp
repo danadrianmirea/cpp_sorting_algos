@@ -1,4 +1,7 @@
+#include <sys/time.h>
+
 #include <climits>
+#include <cstdlib>
 #include <iostream>
 #include <vector>
 
@@ -106,14 +109,43 @@ bool is_sorted(std::vector<int>& v)
   return true;
 }
 
+void random_swap_sort(std::vector<int>& v)
+{
+  static bool is_seeded = false;
+
+  int n = v.size();
+
+  if (is_seeded == false)
+  {
+    struct timeval tv;
+    gettimeofday(&tv, nullptr);
+    srand(tv.tv_usec);
+    is_seeded = true;
+  }
+
+  while (!is_sorted(v))
+  {
+    int index1 = rand() % n;
+    int index2 = rand() % n;
+
+    while (index1 == index2)
+    {
+      index2 = rand() % n;
+    }
+    std::swap(v[index1], v[index2]);
+  }
+}
+
 int main()
 {
-  std::vector<int> v = {-8, 1, 2, -5, 13, -9};
+  std::vector<int> v = {26, 53, 61, 5, 67, 90, 23, -24, 35, -71};
+
   // bubble_sort(v);
   //  selection_sort(v);
   //  stalin_sort(v);
   //  optimized_stalin_sort(v);
-  insertion_sort(v);
+  //  insertion_sort(v);
+  random_swap_sort(v);
 
   for (auto& e : v)
   {
