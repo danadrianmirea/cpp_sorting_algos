@@ -1,3 +1,4 @@
+#include <climits>
 #include <iostream>
 #include <vector>
 
@@ -16,11 +17,36 @@ void bubble_sort(std::vector<int> &v)
   }
 }
 
+void selection_sort(std::vector<int> &v)
+{
+  int startIndex = 0;
+  int n = v.size();
+  int minIndex;
+
+  for (int startIndex = 0; startIndex < n - 1; ++startIndex)
+  {
+    // select smallest item
+    minIndex = startIndex;
+    for (int i = startIndex + 1; i < n; ++i)
+    {
+      if (v[i] < v[minIndex])
+      {
+        minIndex = i;
+      }
+    }
+
+    // put it at the start
+    if (startIndex != minIndex)
+    {
+      std::swap(v[startIndex], v[minIndex]);
+    }
+  }
+}
+
 int main()
 {
   std::vector<int> v = {2, 5, -2, 55, -7};
-  // stalin_sort(v);
-  bubble_sort(v);
+  selection_sort(v);
 
   for (auto &e : v)
   {
