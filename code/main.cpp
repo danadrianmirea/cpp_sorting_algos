@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-void bubble_sort(std::vector<int> &v)
+void bubble_sort(std::vector<int>& v)
 {
   int n = v.size();
   for (int end = n - 1; end > 0; end--)
@@ -17,7 +17,7 @@ void bubble_sort(std::vector<int> &v)
   }
 }
 
-void selection_sort(std::vector<int> &v)
+void selection_sort(std::vector<int>& v)
 {
   int startIndex = 0;
   int n = v.size();
@@ -46,9 +46,9 @@ void selection_sort(std::vector<int> &v)
 int main()
 {
   std::vector<int> v = {2, 5, -2, 55, -7};
-  selection_sort(v);
+  bubble_sort(v);
 
-  for (auto &e : v)
+  for (auto& e : v)
   {
     std::cout << e << " ";
   }
