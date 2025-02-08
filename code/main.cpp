@@ -43,10 +43,30 @@ void selection_sort(std::vector<int>& v)
   }
 }
 
+void stalin_sort(std::vector<int>& v)
+{
+  // remove elements that are not in order
+  // basically just send them to gulag, hence the name of the joke sorting algorithm :)
+  int n = v.size();
+  for (int i = 0; i < v.size() - 1;)
+  {
+    if (v[i + 1] < v[i])
+    {
+      v.erase(v.begin() + i + 1);
+    }
+    else
+    {
+      i++;
+    }
+  }
+}
+
 int main()
 {
-  std::vector<int> v = {2, 5, -2, 55, -7};
-  bubble_sort(v);
+  std::vector<int> v = {-8, 1, 2, -5, 13, -9};
+  // bubble_sort(v);
+  // selection_sort(v);
+  stalin_sort(v);
 
   for (auto& e : v)
   {
