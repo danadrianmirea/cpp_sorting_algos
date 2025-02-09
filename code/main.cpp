@@ -160,6 +160,72 @@ void measure_sort_time(std::vector<int>& v, void (*sorting_function)(std::vector
   std::cout << "Sorting with " << name << " took " << duration.count() << " milliseconds." << std::endl;
 }
 
+// merges two already sorted vectors
+void merge(std::vector<int>& v, int left, int mid, int right)
+{
+  int n1 = (mid - left) + 1;
+  int n2 = (right - mid);
+
+  std::vector<int> leftVector(n1);
+  std::vector<int> rightVector(n2);
+
+  for (int i = 0; i < n1; ++i)
+  {
+    leftVector[i] = v[left+i];
+  }
+
+  for (int i = 0; i < n2; ++i)
+  {
+    rightVector[i] = v[mid+i+1];
+  }
+
+  int leftIndex = 0;
+  int rightIndex = 0;
+  int cIndex = left;
+
+  while (leftIndex < n1 && rightIndex < n2)
+  {
+    if (leftVector[leftIndex] < rightVector[rightIndex])
+    {
+      v[cIndex] = v[leftIndex];
+      leftIndex++;
+      cIndex++;
+    }
+    else
+    {
+      v[cIndex] = v[rightIndex];
+      rightIndex++;
+      cIndex++;
+    }
+  }
+
+  while (leftIndex < n1)
+  {
+    v[cIndex] = leftVector[leftIndex];
+    leftIndex++;
+    cIndex++;
+  }
+
+  while (rightIndex < n2)
+  {
+    v[cIndex] = rightVector[rightIndex];
+    rightIndex++;
+    cIndex++;
+  }
+}
+
+// recursively split the array and merge the bits
+void merge_sort(std::vector<int>& v, int left, int right)
+{
+  int mid = (right-left)/2;
+  if (left < right)
+  {
+    merge_sort(v, left, mid);
+    merge_sort(v, mid + 1, right);
+    merge(v, left, mid, right);
+  }
+}
+
 int main()
 {
   std::vector<int> v = {26, 53, 61, 5, 67, 90, 23, -24, 35, -71};
@@ -171,10 +237,13 @@ int main()
   // insertion_sort(v);
   // random_swap_sort(v);
   // insertion_sort(v);
+  merge_sort(testVector, 0, v.size()-1);
 
-  measure_sort_time(testVector, monkey_sort, "Monkey Sort");
-  testVector = v;
-  measure_sort_time(testVector, bubble_sort, "Bubble Sort");
+  //measure_sort_time(testVector, monkey_sort, "Monkey Sort");
+  //testVector = v;
+  //measure_sort_time(testVector, bubble_sort, "Bubble Sort");
+  //testVector = v;
+  //measure_sort_time(testVector, merge_sort, "Bubble Sort");
 
   for (auto& e : testVector)
   {
