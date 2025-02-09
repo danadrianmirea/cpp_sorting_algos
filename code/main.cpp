@@ -170,13 +170,13 @@ int main()
   // optimized_stalin_sort(v);
   // insertion_sort(v);
   // random_swap_sort(v);
-  insertion_sort(v);
+  // insertion_sort(v);
 
-  // measure_sort_time(testVector, monkey_sort, "Monkey Sort");
-  // testVector = v;
-  // measure_sort_time(testVector, bubble_sort, "Bubble Sort");
+  measure_sort_time(testVector, monkey_sort, "Monkey Sort");
+  testVector = v;
+  measure_sort_time(testVector, bubble_sort, "Bubble Sort");
 
-  for (auto& e : v)
+  for (auto& e : testVector)
   {
     std::cout << e << " ";
   }
