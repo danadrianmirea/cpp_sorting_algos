@@ -1,5 +1,4 @@
 #include <sys/time.h>
-
 #include <algorithm>
 #include <chrono>
 #include <climits>
@@ -7,6 +6,8 @@
 #include <iostream>
 #include <random>
 #include <vector>
+
+//#define PRINT_VECTOR
 
 void bubble_sort(std::vector<int>& v)
 {
@@ -176,7 +177,7 @@ void merge(std::vector<int>& v, int left, int mid, int right)
 
   for (int i = 0; i < n2; ++i)
   {
-    rightVector[i] = v[mid+i+1];
+    rightVector[i] = v[mid + 1 + i];
   }
 
   int leftIndex = 0;
@@ -187,13 +188,13 @@ void merge(std::vector<int>& v, int left, int mid, int right)
   {
     if (leftVector[leftIndex] < rightVector[rightIndex])
     {
-      v[cIndex] = v[leftIndex];
+      v[cIndex] = leftVector[leftIndex];
       leftIndex++;
       cIndex++;
     }
     else
     {
-      v[cIndex] = v[rightIndex];
+      v[cIndex] = rightVector[rightIndex];
       rightIndex++;
       cIndex++;
     }
@@ -215,20 +216,47 @@ void merge(std::vector<int>& v, int left, int mid, int right)
 }
 
 // recursively split the array and merge the bits
-void merge_sort(std::vector<int>& v, int left, int right)
+void merge_sort_split(std::vector<int>& v, int left, int right)
 {
-  int mid = (right-left)/2;
+  int mid = left + (right-left) / 2;
+
   if (left < right)
   {
-    merge_sort(v, left, mid);
-    merge_sort(v, mid + 1, right);
+    merge_sort_split(v, left, mid);
+    merge_sort_split(v, mid + 1, right);
     merge(v, left, mid, right);
   }
+}
+
+inline void merge_sort(std::vector<int>& v)
+{
+  merge_sort_split(v, 0, v.size()-1);
+}
+
+std::vector<int> generate_random_vector(int n, int lower_bound, int upper_bound)
+{
+    // Random number generator setup
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(lower_bound, upper_bound);
+
+    std::vector<int> v(n);
+    for (int i = 0; i < n; ++i)
+    {
+        v[i] = dis(gen);  // Fill the vector with random values in the given range
+    }
+
+    return v;
 }
 
 int main()
 {
   std::vector<int> v = {26, 53, 61, 5, 67, 90, 23, -24, 35, -71};
+  v = generate_random_vector(100000, -100, 100);
+
+  //std::vector<int> v = {26, 53, -71};
+
+  
   std::vector<int> testVector = v;
   // bubble_sort(v);
   // selection_sort(v);
@@ -237,18 +265,21 @@ int main()
   // insertion_sort(v);
   // random_swap_sort(v);
   // insertion_sort(v);
-  merge_sort(testVector, 0, v.size()-1);
+  //merge_sort(testVector);
 
-  //measure_sort_time(testVector, monkey_sort, "Monkey Sort");
-  //testVector = v;
-  //measure_sort_time(testVector, bubble_sort, "Bubble Sort");
-  //testVector = v;
-  //measure_sort_time(testVector, merge_sort, "Bubble Sort");
-
+  // measure_sort_time(testVector, monkey_sort, "Monkey Sort");
+  // measure_sort_time(testVector, random_swap_sort, "Random Swap Sort");
+  // testVector = v;
+  measure_sort_time(testVector, bubble_sort, "Bubble Sort");
+  testVector = v;
+  measure_sort_time(testVector, merge_sort, "Merge Sort");
+  
+#ifdef PRINT_VECTOR
   for (auto& e : testVector)
   {
     std::cout << e << " ";
   }
+#endif
 
   std::cout << "\n";
   return 0;
