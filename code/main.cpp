@@ -252,7 +252,7 @@ std::vector<int> generate_random_vector(int n, int lower_bound, int upper_bound)
 int main()
 {
   std::vector<int> v = {26, 53, 61, 5, 67, 90, 23, -24, 35, -71};
-  v = generate_random_vector(100000, -100, 100);
+  v = generate_random_vector(10000, -100, 100);
 
   //std::vector<int> v = {26, 53, -71};
 
