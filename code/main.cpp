@@ -1,4 +1,5 @@
 #include <sys/time.h>
+
 #include <algorithm>
 #include <chrono>
 #include <climits>
@@ -7,7 +8,7 @@
 #include <random>
 #include <vector>
 
-//#define PRINT_VECTOR
+#define PRINT_VECTOR
 
 void bubble_sort(std::vector<int>& v)
 {
@@ -172,7 +173,7 @@ void merge(std::vector<int>& v, int left, int mid, int right)
 
   for (int i = 0; i < n1; ++i)
   {
-    leftVector[i] = v[left+i];
+    leftVector[i] = v[left + i];
   }
 
   for (int i = 0; i < n2; ++i)
@@ -218,7 +219,7 @@ void merge(std::vector<int>& v, int left, int mid, int right)
 // recursively split the array and merge the bits
 void merge_sort_split(std::vector<int>& v, int left, int right)
 {
-  int mid = left + (right-left) / 2;
+  int mid = left + (right - left) / 2;
 
   if (left < right)
   {
@@ -228,58 +229,91 @@ void merge_sort_split(std::vector<int>& v, int left, int right)
   }
 }
 
+void merge_sort_iter(std::vector<int>& v)
+{
+  int n = v.size();
+  for (int cSize = 1; cSize < n; cSize *= 2)
+  {
+    for (int left = 0; left < n - 1; left += 2 * cSize)
+    {
+      int right = std::min(left + 2 * cSize - 1, n - 1);
+      int mid = std::min(left + cSize - 1, n - 1);
+      merge(v, left, mid, right);
+    }
+  }
+}
+
 inline void merge_sort(std::vector<int>& v)
 {
-  merge_sort_split(v, 0, v.size()-1);
+  merge_sort_split(v, 0, v.size() - 1);
 }
 
 std::vector<int> generate_random_vector(int n, int lower_bound, int upper_bound)
 {
-    // Random number generator setup
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(lower_bound, upper_bound);
+  // Random number generator setup
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(lower_bound, upper_bound);
 
-    std::vector<int> v(n);
-    for (int i = 0; i < n; ++i)
-    {
-        v[i] = dis(gen);  // Fill the vector with random values in the given range
-    }
+  std::vector<int> v(n);
+  for (int i = 0; i < n; ++i)
+  {
+    v[i] = dis(gen);  // Fill the vector with random values in the given range
+  }
 
-    return v;
+  return v;
 }
 
 int main()
 {
-  std::vector<int> v = {26, 53, 61, 5, 67, 90, 23, -24, 35, -71};
-  v = generate_random_vector(10000, -100, 100);
-
-  //std::vector<int> v = {26, 53, -71};
-
-  
+  std::vector<int> v = {31, 96, -56, -37, 76};
+  //v = {7, 2, 1, 3};
+  //v = generate_random_vector(5, -100, 100);
   std::vector<int> testVector = v;
-  // bubble_sort(v);
-  // selection_sort(v);
+  // bubble_sort(v);5555
+  // selection_sort(v);%%
   // stalin_sort(v);
   // optimized_stalin_sort(v);
   // insertion_sort(v);
   // random_swap_sort(v);
   // insertion_sort(v);
-  //merge_sort(testVector);
+  // merge_sort(testVector);
+
+#ifdef PRINT_VECTOR
+  std::cout << "Before sorting: ";
+  for (auto& e : testVector)
+  {
+    std::cout << e << ", ";
+  }
+  std::cout << "\n";
+#endif
+
+  merge_sort_iter(testVector);
 
   // measure_sort_time(testVector, monkey_sort, "Monkey Sort");
   // measure_sort_time(testVector, random_swap_sort, "Random Swap Sort");
   // testVector = v;
-  measure_sort_time(testVector, bubble_sort, "Bubble Sort");
-  testVector = v;
-  measure_sort_time(testVector, merge_sort, "Merge Sort");
-  
-#ifdef PRINT_VECTOR
+  //measure_sort_time(testVector, bubble_sort, "Bubble Sort");
+  //testVector = v;
+  //measure_sort_time(testVector, merge_sort, "Merge Sort");
+
+  #ifdef PRINT_VECTOR
+  std::cout << "After sorting: ";
   for (auto& e : testVector)
   {
-    std::cout << e << " ";
+    std::cout << e << ", ";
   }
+  std::cout << "\n";
 #endif
+
+  if(is_sorted(testVector))
+  {
+    std::cout << "Vector is sorted, congrats! \n";
+  }
+  else 
+  {
+    std::cout << "Vector is not sorted! \n";  
+  }
 
   std::cout << "\n";
   return 0;
