@@ -264,18 +264,6 @@ std::vector<int> generate_random_vector(int n, int lower_bound, int upper_bound)
   return v;
 }
 
-/*
-        i 
-  1 2 8 3 5
-    p          2
-    
-    i  
-  3 5 8        5
-    p
-
-  1 2 3 5 8
-*/
-
 int quicksort_partition(std::vector<int>&v, int left, int right)
 {
   int pPos = left;
