@@ -264,6 +264,42 @@ std::vector<int> generate_random_vector(int n, int lower_bound, int upper_bound)
   return v;
 }
 
+/*
+        i 
+  1 2 8 3 5
+    p          2
+    
+    i  
+  3 5 8        5
+    p
+
+  1 2 3 5 8
+*/
+
+int quicksort_partition(std::vector<int>&v, int left, int right)
+{
+  int pPos = left;
+  for(int i=left; i<right; ++i)
+  {
+    if(v[i]<v[right])
+    {
+      std::swap(v[i], v[pPos]);
+      pPos++;
+    }
+  }
+  std::swap(v[right], v[pPos]);
+  return pPos;
+}
+
+void quicksort(std::vector<int>& v, int left, int right)
+{
+  if(left>=right) return;
+
+  int pPos = quicksort_partition(v, left, right);
+  quicksort(v, left, pPos-1); 
+  quicksort(v, pPos+1, right);
+}
+
 int main()
 {
   std::vector<int> v = {31, 96, -56, -37, 76};
@@ -288,7 +324,8 @@ int main()
   std::cout << "\n";
 #endif
 
-  merge_sort_iter(testVector);
+  //merge_sort_iter(testVector);
+  quicksort(testVector, 0, testVector.size()-1);
 
   // measure_sort_time(testVector, monkey_sort, "Monkey Sort");
   // measure_sort_time(testVector, random_swap_sort, "Random Swap Sort");
